@@ -42,7 +42,7 @@ It integrates a Microsoft SQL Server `.bacpac` database and provides a clean use
 
 ---
 
-> ℹ️ This web application includes **15+ Razor Pages** with full CRUD support, an **admin panel**, **user authentication**, **real-time SQL execution** and more. Explore the full source for all features!
+> ℹ️ This web application includes **25+ Razor Pages** with full CRUD support, an **admin panel**, **user authentication**, **real-time SQL execution** and more. Explore the full source for all features!
 
 ---
 
