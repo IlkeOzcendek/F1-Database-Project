@@ -42,6 +42,10 @@ It integrates a Microsoft SQL Server `.bacpac` database and provides a clean use
 
 ---
 
+> ℹ️ This web application includes **15+ Razor Pages** with full CRUD support, an **admin panel**, **user authentication**, **real-time SQL execution** and more. Explore the full source for all features!
+
+---
+
 ## 🖼️ Sample Screenshots
 
 | Login Page | Start Page |
@@ -59,5 +63,6 @@ It integrates a Microsoft SQL Server `.bacpac` database and provides a clean use
 | Admin Dashboard |
 |-----------------|
 | ![Admin](screenshots/adminDashboard.png) |
+> 📌 The admin dashboard summarises all system data and provides links to manage each entity.
 
 
