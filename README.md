@@ -56,3 +56,8 @@ It integrates a Microsoft SQL Server `.bacpac` database and provides a clean use
 |------------------|------------------|
 | ![Accidents](screenshots/manageAccidents.png) | ![SQL](screenshots/runSQLCommands.png) |
 
+| Admin Dashboard |
+|-----------------|
+| ![Admin](screenshots/adminDashboard.png) |
+
+
