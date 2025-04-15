@@ -1,0 +1,50 @@
+@page
+@model DriverDetailsModel
+
+@{
+    ViewData["Title"] = "Driver Details";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Drivers' Information</h1>
+        <a href="http://localhost:5005/StartPage" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back to Start Page</a>
+    </div>
+
+    <!-- Driver Details Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Driver ID</th>
+                            <th>Full Name</th>
+                            <th>Age</th>
+                            <th>Nationality</th>
+                            <th>Date of Birth</th>
+                            <th>Date of Death</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var driver in Model.DriverDetails)
+                        {
+                            <tr>
+                                <td>@driver.DriverID</td>
+                                <td>@driver.FullName</td>
+                                <td>@driver.Age</td>
+                                <td>@driver.Nationality</td>
+                                <td>@driver.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                                <td>@(driver.DateOfDeath.HasValue ? driver.DateOfDeath.Value.ToString("yyyy-MM-dd") : "N/A")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

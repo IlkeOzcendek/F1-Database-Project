@@ -1,0 +1,78 @@
+@page
+@model ManageTeamsModel
+
+@{
+    ViewData["Title"] = "Manage Teams";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Teams</h1>
+
+    <!-- Add/Update Team Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Team" : "Add New Team")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentTeam.Team_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentTeam.Team_Name" class="form-label">Team Name</label>
+                    <input asp-for="CurrentTeam.Team_Name" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentTeam.Team_Country" class="form-label">Country</label>
+                    <input asp-for="CurrentTeam.Team_Country" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentTeam.Established_Year" class="form-label">Established Year</label>
+                    <input asp-for="CurrentTeam.Established_Year" type="number" class="form-control" required />
+                </div>
+                <button type="submit" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")" class="btn btn-success">
+                    @(Model.IsEditing ? "Update Team" : "Add Team")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Teams List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Team List
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Team Name</th>
+                        <th>Country</th>
+                        <th>Established Year</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var team in Model.Teams)
+                    {
+                        <tr>
+                            <td>@team.Team_ID</td>
+                            <td>@team.Team_Name</td>
+                            <td>@team.Team_Country</td>
+                            <td>@team.Established_Year</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@team.Team_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@team.Team_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

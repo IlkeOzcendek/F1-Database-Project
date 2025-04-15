@@ -1,0 +1,78 @@
+@page
+@model ManageSeasonsModel
+
+@{
+    ViewData["Title"] = "Manage Seasons";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Seasons</h1>
+
+    <!-- Add/Update Season Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Season" : "Add New Season")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentSeason.Season_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentSeason.Season_Year" class="form-label">Season Year</label>
+                    <input asp-for="CurrentSeason.Season_Year" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentSeason.Start_Date" class="form-label">Start Date</label>
+                    <input asp-for="CurrentSeason.Start_Date" type="date" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentSeason.End_Date" class="form-label">End Date</label>
+                    <input asp-for="CurrentSeason.End_Date" type="date" class="form-control" required />
+                </div>
+                <button type="submit" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")" class="btn btn-success">
+                    @(Model.IsEditing ? "Update Season" : "Add Season")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Seasons List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Seasons
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Season ID</th>
+                        <th>Season Year</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var season in Model.Seasons)
+                    {
+                        <tr>
+                            <td>@season.Season_ID</td>
+                            <td>@season.Season_Year</td>
+                            <td>@season.Start_Date.ToString("yyyy-MM-dd")</td>
+                            <td>@season.End_Date.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@season.Season_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@season.Season_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

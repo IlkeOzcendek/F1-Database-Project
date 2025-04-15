@@ -1,0 +1,107 @@
+@page
+@model ManageRaceTrackSeasonDetailsModel
+
+@{
+    ViewData["Title"] = "Manage Race Track Season Details";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Race Track Season Details</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <!-- Add/Update Race-Track-Season Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Race Track Season" : "Add New Race Track Season")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentDetail.Race_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Race_ID" class="form-label">Race ID</label>
+                    <input asp-for="CurrentDetail.Race_ID" type="number" class="form-control" readonly="@(Model.IsEditing ? "readonly" : null)" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Path_ID" class="form-label">Path ID</label>
+                    <input asp-for="CurrentDetail.Path_ID" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Season_ID" class="form-label">Season ID</label>
+                    <input asp-for="CurrentDetail.Season_ID" type="number" class="form-control" required />
+                </div>
+                <button type="submit" asp-page-handler=@(Model.IsEditing ? "Update" : "Add") class="btn btn-success">
+                    @(Model.IsEditing ? "Update Race Track Season" : "Add Race Track Season")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Race Track Season Details List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Race Track Season Details
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Race ID</th>
+                        <th>Race Name</th>
+                        <th>Date of Race</th>
+                        <th>Path ID</th>
+                        <th>Path Name</th>
+                        <th>Country</th>
+                        <th>Location</th>
+                        <th>Length</th>
+                        <th>Turns</th>
+                        <th>Direction</th>
+                        <th>Season ID</th>
+                        <th>Season Year</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.RaceTrackSeasonDetails)
+                    {
+                        <tr>
+                            <td>@detail.Race_ID</td>
+                            <td>@detail.Race_Name</td>
+                            <td>@detail.Date_of_Race.ToString("yyyy-MM-dd")</td>
+                            <td>@detail.Path_ID</td>
+                            <td>@detail.Path_Name</td>
+                            <td>@detail.Path_Country</td>
+                            <td>@detail.Location</td>
+                            <td>@detail.Length</td>
+                            <td>@detail.Turns</td>
+                            <td>@detail.Direction</td>
+                            <td>@detail.Season_ID</td>
+                            <td>@detail.Season_Year</td>
+                            <td>@detail.Season_Start_Date.ToString("yyyy-MM-dd")</td>
+                            <td>@detail.Season_End_Date.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@detail.Race_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@detail.Race_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

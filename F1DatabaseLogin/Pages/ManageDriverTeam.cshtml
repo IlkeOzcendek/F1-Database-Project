@@ -1,0 +1,65 @@
+@page
+@model F1Database.Pages.ManageDriverTeamDetailsModel
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Driver Team Details</h1>
+
+    <!-- Add Driver-Team Association Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">@(Model.IsEditing ? "Update Driver-Team Association" : "Add Driver-Team Association")</div>
+        <div class="card-body">
+            <form method="post" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")">
+                <div class="mb-3">
+                    <label for="DriverID" class="form-label">Driver ID</label>
+                    <input id="DriverID" asp-for="CurrentDetail.Driver_ID" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="TeamID" class="form-label">Team ID</label>
+                    <input id="TeamID" asp-for="CurrentDetail.Team_ID" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-success">@(Model.IsEditing ? "Update Association" : "Add Association")</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Driver-Team Details List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">Driver Team Details</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Driver ID</th>
+                        <th>Driver Name</th>
+                        <th>Team ID</th>
+                        <th>Team Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.DriverTeamDetails)
+                    {
+                        <tr>
+                            <td>@detail.Driver_ID</td>
+                            <td>@detail.Driver_Name</td>
+                            <td>@detail.Team_ID</td>
+                            <td>@detail.Team_Name</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="driverId" value="@detail.Driver_ID" />
+                                    <input type="hidden" name="teamId" value="@detail.Team_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="driverId" value="@detail.Driver_ID" />
+                                    <input type="hidden" name="teamId" value="@detail.Team_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

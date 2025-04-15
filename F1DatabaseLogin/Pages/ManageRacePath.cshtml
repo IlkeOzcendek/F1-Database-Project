@@ -1,0 +1,99 @@
+@page
+@model ManageRacePathsModel
+
+@{
+    ViewData["Title"] = "Manage Race Paths";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Race Paths</h1>
+
+    <!-- Add/Update Race Path Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Race Path" : "Add New Race Path")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentRacePath.Path_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentRacePath.Path_Name" class="form-label">Path Name</label>
+                    <input asp-for="CurrentRacePath.Path_Name" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRacePath.Path_Country" class="form-label">Country</label>
+                    <input asp-for="CurrentRacePath.Path_Country" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRacePath.Location" class="form-label">Location</label>
+                    <input asp-for="CurrentRacePath.Location" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRacePath.Length" class="form-label">Length (km)</label>
+                    <input asp-for="CurrentRacePath.Length" type="number" step="0.001" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRacePath.Turns" class="form-label">Number of Turns</label>
+                    <input asp-for="CurrentRacePath.Turns" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRacePath.Direction" class="form-label">Direction</label>
+                    <select asp-for="CurrentRacePath.Direction" class="form-select" required>
+                        <option value="Clockwise">Clockwise</option>
+                        <option value="Counterclockwise">Counterclockwise</option>
+                    </select>
+                </div>
+                <button type="submit" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")" class="btn btn-success">
+                    @(Model.IsEditing ? "Update Race Path" : "Add Race Path")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Race Paths List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Race Paths
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Path ID</th>
+                        <th>Path Name</th>
+                        <th>Country</th>
+                        <th>Location</th>
+                        <th>Length (km)</th>
+                        <th>Turns</th>
+                        <th>Direction</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var path in Model.RacePaths)
+                    {
+                        <tr>
+                            <td>@path.Path_ID</td>
+                            <td>@path.Path_Name</td>
+                            <td>@path.Path_Country</td>
+                            <td>@path.Location</td>
+                            <td>@path.Length</td>
+                            <td>@path.Turns</td>
+                            <td>@path.Direction</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@path.Path_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@path.Path_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

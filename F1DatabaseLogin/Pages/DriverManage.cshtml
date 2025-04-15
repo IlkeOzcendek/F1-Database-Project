@@ -1,0 +1,96 @@
+@page
+@model ManageDriversModel
+
+@{
+    ViewData["Title"] = "Manage Drivers";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Drivers</h1>
+
+    <!-- Add/Update Driver Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Driver" : "Add New Driver")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentDriver.Driver_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentDriver.First_Name" class="form-label">First Name</label>
+                    <input asp-for="CurrentDriver.First_Name" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDriver.Middle_Name" class="form-label">Middle Name</label>
+                    <input asp-for="CurrentDriver.Middle_Name" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDriver.Last_Name" class="form-label">Last Name</label>
+                    <input asp-for="CurrentDriver.Last_Name" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDriver.Nationality" class="form-label">Nationality</label>
+                    <input asp-for="CurrentDriver.Nationality" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDriver.Date_of_Birth" class="form-label">Date of Birth</label>
+                    <input asp-for="CurrentDriver.Date_of_Birth" type="date" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDriver.Date_of_Death" class="form-label">Date of Death</label>
+                    <input asp-for="CurrentDriver.Date_of_Death" type="date" class="form-control" />
+                </div>
+                <button type="submit" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")" class="btn btn-success">
+                    @(Model.IsEditing ? "Update Driver" : "Add Driver")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Drivers List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Driver List
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Nationality</th>
+                        <th>Date of Birth</th>
+                        <th>Date of Death</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var driver in Model.Drivers)
+                    {
+                        <tr>
+                            <td>@driver.Driver_ID</td>
+                            <td>@driver.First_Name</td>
+                            <td>@driver.Middle_Name</td>
+                            <td>@driver.Last_Name</td>
+                            <td>@driver.Nationality</td>
+                            <td>@driver.Date_of_Birth.ToString("yyyy-MM-dd")</td>
+                            <td>@driver.Date_of_Death?.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@driver.Driver_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@driver.Driver_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

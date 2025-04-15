@@ -1,0 +1,77 @@
+@page
+@model RaceResultsModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Race Winners</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Race Winners</h1>
+    <a href="http://localhost:5005/StartPage" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back to Start Page</a>
+</div>
+
+        <!-- Race Winners Table -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th><a href="http://localhost:5005/SeasonRaces" class="text-primary">Race Name</a></th>
+                                <th>Date</th>
+                                <th><a href="http://localhost:5005/Drivers" class="text-primary">Driver Name</a></th>
+                                <th><a href="http://localhost:5005/TeamInsights" class="text-primary">Team</a></th>
+                                <th>Position</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var result in Model.RaceWinners)
+                            {
+                                <tr>
+                                    <td>@result.RaceName</td>
+                                    <td>@result.Date.ToString("yyyy-MM-dd")</td>
+                                    <td>@result.DriverName</td>
+                                    <td>@result.TeamName</td>
+                                    <td>@result.Position</td>
+                                    <td>@result.Points</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages -->
+    <script src="/js/sb-admin-2.min.js"></script>
+</body>
+
+</html>

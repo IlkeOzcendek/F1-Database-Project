@@ -1,0 +1,16 @@
+@page "{id:int}"
+@model DeletePresetQueryModel
+@{
+    ViewData["Title"] = "Delete Preset Query";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Delete Preset Query</h1>
+
+    <p>Are you sure you want to delete the query "<strong>@Model.QueryName</strong>"?</p>
+
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="/ManagePresetQueries" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

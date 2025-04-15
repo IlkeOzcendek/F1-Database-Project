@@ -1,0 +1,79 @@
+@page
+@model ManageUsersModel
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Users</h1>
+
+    <!-- Add/Update User Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update User" : "Add New User")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentUser.Id" />
+                <div class="mb-3">
+                    <label asp-for="CurrentUser.Email" class="form-label">Email</label>
+                    <input asp-for="CurrentUser.Email" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentUser.Password" class="form-label">Password</label>
+                    <input asp-for="CurrentUser.Password" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentUser.Role" class="form-label">Role</label>
+                    <select asp-for="CurrentUser.Role" class="form-select">
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                    </select>
+                </div>
+                <button type="submit" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")" class="btn btn-success">
+                    @(Model.IsEditing ? "Update User" : "Add User")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Users List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            User List
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.Email</td>
+                            <td>@(user.Role == 1 ? "Admin" : "User")</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

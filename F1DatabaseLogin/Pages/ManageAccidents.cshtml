@@ -1,0 +1,66 @@
+@page
+@model F1Database.Pages.ManageAccidentsModel
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Accidents</h1>
+
+    <!-- Add Accident Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Add Accident</div>
+        <div class="card-body">
+            <form method="post" asp-page-handler="Add">
+                <div class="mb-3">
+                    <label for="RaceID" class="form-label">Race</label>
+                    <select id="RaceID" asp-for="CurrentAccident.Race_ID" class="form-select" required>
+                        <option value="" disabled selected>Select Race</option>
+                        @foreach (var race in Model.Races)
+                        {
+                            <option value="@race.Race_ID">@race.Race_Name (@race.Date_of_Race.ToShortDateString())</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="DateOfAccident" class="form-label">Date of Accident</label>
+                    <input id="DateOfAccident" asp-for="CurrentAccident.Date_of_Accident" type="date" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea id="Description" asp-for="CurrentAccident.Accident_Description" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="Severity" class="form-label">Severity</label>
+                    <input id="Severity" asp-for="CurrentAccident.Severity_Description" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-success">Add Accident</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Accident Details List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">Accident Details</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Race Name</th>
+                        <th>Date of Accident</th>
+                        <th>Description</th>
+                        <th>Severity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var accident in Model.Accidents)
+                    {
+                        <tr>
+                            <td>@accident.Race_Name</td>
+                            <td>@accident.Date_of_Accident.ToShortDateString()</td>
+                            <td>@accident.Accident_Description</td>
+                            <td>@accident.Severity_Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

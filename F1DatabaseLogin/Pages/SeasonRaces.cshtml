@@ -1,0 +1,88 @@
+@page "{SeasonYearFilter:int?}"
+@model RaceTrackSeasonDetailsModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Race Track Season Details</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Races In Seasons</h1>
+            <a href="http://localhost:5005/StartPage" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back to Start Page</a>
+        </div>
+
+        <!-- Filter Form -->
+        <form method="get" class="mb-4">
+            <div class="form-group">
+                <label for="SeasonYearFilter">Filter by Season Year:</label>
+                <input type="number" id="SeasonYearFilter" name="SeasonYearFilter" class="form-control" placeholder="Enter Season Year" value="@Model.SeasonYearFilter" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Race Track Season Details Table -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Race Name</th>
+                                <th>Date of Race</th>
+                                <th>
+                                    <a href="http://localhost:5005/RacePath" class="text-primary">Path Name</a>
+                                </th>
+                                <th>Season Year</th>
+                                <th>Season Start Date</th>
+                                <th>Season End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var detail in Model.RaceTrackSeasonDetails)
+                            {
+                                <tr>
+                                    <td>@detail.RaceName</td>
+                                    <td>@detail.DateOfRace.ToString("yyyy-MM-dd")</td>
+                                    <td>@detail.PathName</td>
+                                    <td>@detail.SeasonYear</td>
+                                    <td>@detail.SeasonStartDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@detail.SeasonEndDate.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages -->
+    <script src="/js/sb-admin-2.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+@page
+@model RacePathsModel
+@{
+    ViewData["Title"] = "Race Paths";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Race Paths</h1>
+    <a href="http://localhost:5005/StartPage" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back to Start Page</a>
+
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Path ID</th>
+                <th>Path Name</th>
+                <th>Country</th>
+                <th>Location</th>
+                <th>Length (km)</th>
+                <th>Turns</th>
+                <th>Direction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var path in Model.RacePaths)
+            {
+                <tr>
+                    <td>@path.PathID</td>
+                    <td>@path.PathName</td>
+                    <td>@path.PathCountry</td>
+                    <td>@path.Location</td>
+                    <td>@path.Length</td>
+                    <td>@path.Turns</td>
+                    <td>@path.Direction</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

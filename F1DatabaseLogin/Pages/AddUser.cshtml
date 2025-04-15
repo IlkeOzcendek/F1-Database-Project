@@ -1,0 +1,71 @@
+@page
+@model AddUserModel
+
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<div class="container-fluid">
+    <!-- Add User Form -->
+    <div class="card mb-4">
+        <div class="card-header text-primary">
+            Add New User
+        </div>
+        <div class="card-body">
+            <form method="post" action="/AddUser">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="Email" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="Password" required>
+    </div>
+    <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <select class="form-select" id="role" name="Role">
+            <option value="1">Admin</option>
+            <option value="2" selected>User</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+
+        </div>
+    </div>
+
+    <!-- User List -->
+    <div class="card">
+        <div class="card-header text-primary">
+            User List
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.Email</td>
+                            <td>@(user.Role == 1 ? "Admin" : "User")</td>
+                            <td>
+                                <form method="post" action="/DeleteUser" class="d-inline">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

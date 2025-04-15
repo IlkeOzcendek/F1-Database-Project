@@ -1,0 +1,78 @@
+@page
+@model ManageRacesModel
+
+@{
+    ViewData["Title"] = "Manage Races";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Races</h1>
+
+    <!-- Add/Update Race Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Race" : "Add New Race")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentRace.Race_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentRace.Race_Name" class="form-label">Race Name</label>
+                    <input asp-for="CurrentRace.Race_Name" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRace.Date_of_Race" class="form-label">Date of Race</label>
+                    <input asp-for="CurrentRace.Date_of_Race" type="date" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentRace.Laps" class="form-label">Number of Laps</label>
+                    <input asp-for="CurrentRace.Laps" type="number" class="form-control" required />
+                </div>
+                <button type="submit" asp-page-handler='@(Model.IsEditing ? "Update" : "Add")' class="btn btn-success">
+                    @(Model.IsEditing ? "Update Race" : "Add Race")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Races List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Races List
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Race ID</th>
+                        <th>Race Name</th>
+                        <th>Date of Race</th>
+                        <th>Laps</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var race in Model.Races)
+                    {
+                        <tr>
+                            <td>@race.Race_ID</td>
+                            <td>@race.Race_Name</td>
+                            <td>@race.Date_of_Race.ToString("yyyy-MM-dd")</td>
+                            <td>@race.Laps</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@race.Race_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@race.Race_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

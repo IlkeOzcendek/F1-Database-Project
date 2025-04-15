@@ -1,0 +1,78 @@
+@page
+@model ManageCarsModel
+
+@{
+    ViewData["Title"] = "Manage Cars";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Cars</h1>
+
+    <!-- Add/Update Car Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Car" : "Add New Car")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentCar.Car_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentCar.Model" class="form-label">Model</label>
+                    <input asp-for="CurrentCar.Model" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentCar.Engine_Type" class="form-label">Engine Type</label>
+                    <input asp-for="CurrentCar.Engine_Type" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentCar.Weight" class="form-label">Weight (kg)</label>
+                    <input asp-for="CurrentCar.Weight" type="number" step="0.01" class="form-control" required />
+                </div>
+                <button type="submit" asp-page-handler="@(Model.IsEditing ? "Update" : "Add")" class="btn btn-success">
+                    @(Model.IsEditing ? "Update Car" : "Add Car")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cars List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Cars
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Car ID</th>
+                        <th>Model</th>
+                        <th>Engine Type</th>
+                        <th>Weight (kg)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var car in Model.Cars)
+                    {
+                        <tr>
+                            <td>@car.Car_ID</td>
+                            <td>@car.Model</td>
+                            <td>@car.Engine_Type</td>
+                            <td>@car.Weight</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@car.Car_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@car.Car_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

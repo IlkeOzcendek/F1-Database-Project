@@ -1,0 +1,102 @@
+@page
+@model ManageDriverCarRaceDetailsModel
+
+@{
+    ViewData["Title"] = "Manage Driver-Car-Race Details";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Driver-Car-Race Details</h1>
+
+    <!-- Add/Update Driver-Car-Race Form -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            @(Model.IsEditing ? "Update Participation" : "Add New Participation")
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="CurrentDetail.Participation_ID" />
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Driver_ID" class="form-label">Driver ID</label>
+                    <input asp-for="CurrentDetail.Driver_ID" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Car_ID" class="form-label">Car ID</label>
+                    <input asp-for="CurrentDetail.Car_ID" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Race_ID" class="form-label">Race ID</label>
+                    <input asp-for="CurrentDetail.Race_ID" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Team_ID" class="form-label">Team ID</label>
+                    <input asp-for="CurrentDetail.Team_ID" type="number" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Position_Finished" class="form-label">Position Finished</label>
+                    <input asp-for="CurrentDetail.Position_Finished" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentDetail.Points" class="form-label">Points</label>
+                    <input asp-for="CurrentDetail.Points" type="number" step="0.01" class="form-control" />
+                </div>
+                <button type="submit" asp-page-handler='@(Model.IsEditing ? "Update" : "Add")' class="btn btn-success">
+                    @(Model.IsEditing ? "Update Participation" : "Add Participation")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Driver-Car-Race List -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Driver-Car-Race Details
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Driver ID</th>
+                        <th>Driver Name</th>
+                        <th>Car ID</th>
+                        <th>Car Model</th>
+                        <th>Race ID</th>
+                        <th>Race Name</th>
+                        <th>Date of Race</th>
+                        <th>Team ID</th>
+                        <th>Position Finished</th>
+                        <th>Points</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.DriverCarRaceDetails)
+                    {
+                        <tr>
+                            <td>@detail.Driver_ID</td>
+                            <td>@detail.Driver_Name</td>
+                            <td>@detail.Car_ID</td>
+                            <td>@detail.Car_Model</td>
+                            <td>@detail.Race_ID</td>
+                            <td>@detail.Race_Name</td>
+                            <td>@detail.Date_of_Race.ToString("yyyy-MM-dd")</td>
+                            <td>@detail.Team_ID</td>
+                            <td>@detail.Position_Finished</td>
+                            <td>@detail.Points</td>
+                            <td>
+                                <form method="post" asp-page-handler="Edit" class="d-inline">
+                                    <input type="hidden" name="id" value="@detail.Participation_ID" />
+                                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@detail.Participation_ID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

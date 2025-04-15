@@ -1,0 +1,38 @@
+@page
+@model ManagePresetQueriesModel
+@{
+    ViewData["Title"] = "Manage Preset Queries";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Manage Preset Queries</h1>
+
+    <div class="d-flex mb-4">
+        <a href="/AddPresetQuery" class="btn btn-secondary me-2">Add Preset Query</a>
+        <a href="/Admin" class="btn btn-secondary">Admin Page</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Query ID</th>
+                <th>Query Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var query in Model.PresetQueries)
+            {
+                <tr>
+                    <td>@query.QueryID</td>
+                    <td>@query.QueryName</td>
+                    <td>
+                        <a href="/RunPresetQuery/@query.QueryID" class="btn btn-sm btn-success">Run</a>
+                        <a href="/EditPresetQuery/@query.QueryID" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="/DeletePresetQuery/@query.QueryID" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
